@@ -26,6 +26,7 @@ Inspired at these two awesome styleguides written by [John Papa](https://github.
   1. [Application Structure](#application-structure)
   1. [Modularity](#modularity)
   1. [Startup Logic](#startup-logic)
+  1. [Performance] (#performance)
   1. [Angular $ Wrapper Services](#angular--wrapper-services)
   1. [Testing](#testing)
   1. [Animations](#animations)
@@ -2408,6 +2409,30 @@ Inspired at these two awesome styleguides written by [John Papa](https://github.
       translator.initialize();
   }
   ```
+
+**[Back to top](#table-of-contents)**
+
+## Performance
+
+  - **One-time binding syntax**: In newer versions of Angular (v1.3.0-beta.10+), use the one-time binding syntax `{{ ::value }}` where it makes sense
+
+    ```html
+    // avoid
+    <h1>{{ vm.title }}</h1>
+
+    // recommended
+    <h1 ng-bind="::vm.title"></h1>
+    ```
+    
+    *Why?* : Binding once removes the watcher from the scope's `$$watchers` array after the `undefined` variable becomes resolved, thus improving performance in each dirty-check
+    
+  - **Consider $scope.$digest**: Use `$scope.$digest` over `$scope.$apply` where it makes sense. Only child scopes will update
+
+    ```javascript
+    $scope.$digest();
+    ```
+    
+    *Why?* : `$scope.$apply` will call `$rootScope.$digest`, which causes the entire application `$$watchers` to dirty-check again. Using `$scope.$digest` will dirty check current and child scopes from the initiated `$scope`
 
 **[Back to top](#table-of-contents)**
 
