@@ -12,6 +12,7 @@ Inspired at these two awesome styleguides written by [John Papa](https://github.
   1. [IIFE](#iife)
   1. [Modules](#modules)
   1. [Controllers](#controllers)
+  1. [Publish and subscribe events](#events)
   1. [Services](#services)
   1. [Factories](#factories)
   1. [Data Services](#data-services)
@@ -673,6 +674,51 @@ Inspired at these two awesome styleguides written by [John Papa](https://github.
   </div>
   ```
 
+**[Back to top](#table-of-contents)**
+
+## Publish and subscribe events
+###### [Style [Y425](#style-y425)]
+
+  - **$scope**: Use the `$emit` and `$broadcast` methods to trigger events to direct relationship scopes only
+
+    ```javascript
+    // up the $scope
+    $scope.$emit('customEvent', data);
+
+    // down the $scope
+    $scope.$broadcast('customEvent', data);
+    ```
+
+  - **$rootScope**: Use only `$emit` as an application-wide event bus and remember to unbind listeners
+
+    ```javascript
+    // all $rootScope.$on listeners
+    $rootScope.$emit('customEvent', data);
+    ```
+
+  - Hint: Because the `$rootScope` is never destroyed, `$rootScope.$on` listeners aren't either, unlike `$scope.$on` listeners and will always persist, so they need destroying when the relevant `$scope` fires the `$destroy` event
+
+    ```javascript
+    // call the closure
+    var unbind = $rootScope.$on('customEvent'[, callback]);
+    $scope.$on('$destroy', unbind);
+    ```
+
+  - For multiple `$rootScope` listeners, use an Object literal and loop each one on the `$destroy` event to unbind all automatically
+
+    ```javascript
+    var unbind = [
+      $rootScope.$on('customEvent1'[, callback]),
+      $rootScope.$on('customEvent2'[, callback]),
+      $rootScope.$on('customEvent3'[, callback])
+    ];
+    $scope.$on('$destroy', function () {
+      unbind.forEach(function (fn) {
+        fn();
+      });
+    });
+    ```
+    
 **[Back to top](#table-of-contents)**
 
 ## Services
