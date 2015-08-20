@@ -676,7 +676,7 @@ Inspired at these two awesome styleguides written by [John Papa](https://github.
 
 **[Back to top](#table-of-contents)**
 
-## Publish and subscribe events
+## Events
 ###### [Style [Y425](#style-y425)]
 
   - **$scope**: Use the `$emit` and `$broadcast` methods to trigger events to direct relationship scopes only
