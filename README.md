@@ -948,17 +948,20 @@ Inspired at these two awesome styleguides written by [John Papa](https://github.
       activate();
 
       function activate() {
-          return getAvengers().then(function() {
+          return getAvengers().then(thenFn);
+          
+          function thenFn() {
               logger.info('Activated Avengers View');
-          });
+          }
       }
 
       function getAvengers() {
-          return dataservice.getAvengers()
-              .then(function(data) {
-                  vm.avengers = data;
-                  return vm.avengers;
-              });
+          return dataservice.getAvengers().then(thenFn);
+              
+          function thenFn(data) {
+              vm.avengers = data;
+              return vm.avengers;
+          }
       }
   }
   ```
@@ -1304,8 +1307,8 @@ Inspired at these two awesome styleguides written by [John Papa](https://github.
   ```html
   <!-- example.directive.html -->
   <div>hello world</div>
-  <div>max={{vm.max}}<input ng-model="vm.max"/></div>
-  <div>min={{vm.min}}<input ng-model="vm.min"/></div>
+  <div>max=<span ng-bind="vm.max"></span><input ng-model="vm.max"/></div>
+  <div>min=<span ng-bind="vm.min"></span><input ng-model="vm.min"/></div>
   ```
 
 **[Back to top](#table-of-contents)**
@@ -1348,10 +1351,12 @@ Inspired at these two awesome styleguides written by [John Papa](https://github.
       ////////////
 
       function activate() {
-          return dataservice.getAvengers().then(function(data) {
+          return dataservice.getAvengers().then(thenFn);
+          
+          function thenFn(data) {
               vm.avengers = data;
               return vm.avengers;
-          });
+          }
       }
   }
   ```
