@@ -17,6 +17,7 @@ Inspired at these two awesome styleguides written by [John Papa](https://github.
   1. [Factories](#factories)
   1. [Data Services](#data-services)
   1. [Directives](#directives)
+  1. [Data binding] (#data-binding)
   1. [Resolving Promises for a Controller](#resolving-promises-for-a-controller)
   1. [Manual Annotating for Dependency Injection](#manual-annotating-for-dependency-injection)
   1. [Minification and Annotation](#minification-and-annotation)
@@ -1356,6 +1357,26 @@ Inspired at these two awesome styleguides written by [John Papa](https://github.
   <div>hello world</div>
   <div>max=<span ng-bind="vm.max"></span><input ng-model="vm.max"/></div>
   <div>min=<span ng-bind="vm.min"></span><input ng-model="vm.min"/></div>
+  ```
+
+**[Back to top](#table-of-contents)**
+
+## Data Binding
+
+  - Always prefer using `ng-bind` over interpolation.
+
+  *Why?*: `ng-bind` is easier to debug via browser console, because you can still check what binding is being set.
+  
+  *Why?*: interpolation needs ng-cloack to hide the bindings when the binding data has not arrived yet.
+  
+  ```html
+  /* avoid */
+  <span> {{info}} </span>
+  ```
+  
+  ```html
+  /* recommended */
+  <span ng-bind="vm.info"></span>
   ```
 
 **[Back to top](#table-of-contents)**
