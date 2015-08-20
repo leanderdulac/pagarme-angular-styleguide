@@ -1,5 +1,5 @@
 # pagarme-angular-styleguide
-The awesome angular.js styleguide that we follow at Pagar.me
+The awesome angular.js styleguide that we follow at [Pagar.me](http://pagar.me)
 
 The goal of this styleguide is to provide guidance when developing angularjs applications, such as best practices and conventions.
 
