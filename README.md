@@ -298,7 +298,7 @@ Inspired at these two awesome styleguides written by [John Papa](https://github.
   ```html
   <!-- recommended -->
   <div ng-controller="Customer as customer">
-      {{ customer.name }}
+      <span ng-bind="customer.name"></span>
   </div>
   ```
 
@@ -528,16 +528,21 @@ Inspired at these two awesome styleguides written by [John Papa](https://github.
       activate();
 
       function activate() {
-          return getAvengers().then(function() {
+          return getAvengers().then(thenFn);
+          
+          function thenFn() {
               logger.info('Activated Avengers View');
-          });
+          }
+          
       }
 
       function getAvengers() {
-          return avengersService.getAvengers().then(function(data) {
+          return avengersService.getAvengers().then(thenFn);
+          
+          function thenFn(data) {
               vm.avengers = data;
               return vm.avengers;
-          });
+          }
       }
   }
   ```
@@ -596,8 +601,12 @@ Inspired at these two awesome styleguides written by [John Papa](https://github.
 
       function checkCredit() {
          return creditService.isOrderTotalOk(vm.total)
-            .then(function(isOk) { vm.isCreditOk = isOk; })
+            .then(thenFn)
             .catch(showError);
+            
+         function thenFn(isOk) {
+          vm.isCreditOk = isOk;
+         }
       };
   }
   ```
